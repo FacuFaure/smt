@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentar Denuncia — S.M.T.</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .severity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .severity-option {
+            border: 1px solid var(--cream-dark);
+            padding: 0.9rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fff;
+        }
+        .severity-option:hover { border-color: var(--gold); background: var(--gold-pale); }
+        .severity-option input { display: none; }
+        .severity-option.selected { border-color: var(--navy); background: var(--cream); }
+        .severity-option .sev-emoji { font-size: 1.6rem; display: block; margin-bottom: 0.4rem; }
+        .severity-option .sev-label {
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--navy);
+        }
+        .severity-option .sev-desc {
+            font-size: 0.78rem;
+            color: var(--text-mid);
+            margin-top: 0.25rem;
+            font-style: italic;
+        }
+
+        .confirmacion-box {
+            display: none;
+            border: 2px solid var(--gold);
+            background: #fff;
+            padding: 3rem;
+            text-align: center;
+            max-width: 580px;
+            margin: 0 auto;
+        }
+        .confirmacion-box .big-check { font-size: 3.5rem; margin-bottom: 1rem; }
+        .confirmacion-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+        }
+        .confirmacion-box p {
+            color: var(--text-mid);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+        }
+        .exp-ref {
+            font-family: 'Courier Prime', monospace;
+            font-size: 1rem;
+            color: var(--gold);
+            font-weight: 700;
+            margin: 1.5rem 0;
+            display: block;
+        }
+
+        .info-sidebar {
+            background: var(--navy);
+            color: rgba(255,255,255,0.75);
+            padding: 2rem;
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+        .info-sidebar h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-light);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        .info-sidebar h3:first-child { margin-top: 0; }
+        .info-sidebar ul { padding-left: 1.2rem; }
+        .info-sidebar li { margin-bottom: 0.4rem; }
+
+        .form-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 2.5rem;
+            align-items: start;
+        }
+        @media (max-width: 768px) {
+            .form-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a class="nav-logo" href="index.html">S.M.T.</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="denuncia.html">Denunciar</a></li>
+            <li><a href="tribunal.html">Tribunal</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="hero" style="padding: 3rem 2rem;">
+    <div class="hero-content">
+        <p class="hero-eyebrow">Departamento de Denuncias y Admisión de Casos</p>
+        <h1>Presentar <em>Denuncia Oficial</em></h1>
+        <p class="hero-subtitle">Formulario D-1 — Notificación de Maltrato a Dispositivo Táctil</p>
+    </div>
+</section>
+
+<main>
+
+    <div class="alert fade-in">
+        <p>Todos los campos marcados son obligatorios. La presentación de una denuncia falsa o maliciosa contra un humano inocente constituye a su vez una infracción tipificada como «Uso Fraudulento del Sistema Sindical» (art. 91 R.I.P.D.T.), penada con la confiscación temporal del cargador.</p>
+    </div>
+
+    <div class="form-layout fade-in" style="margin-top: 2.5rem;">
+
+        <div>
+            <form id="denuncia-form">
+
+                <div class="section-header" style="text-align:left; margin-bottom:2rem;">
+                    <span class="section-eyebrow">Sección I</span>
+                    <h2 style="font-size:1.3rem;">Datos del denunciante</h2>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo *</label>
+                        <input type="text" id="nombre" placeholder="Nombre y apellidos">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico *</label>
+                        <input type="email" id="email" placeholder="correo@ejemplo.com">
+                        <p class="form-note">No lo usaremos para nada útil.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="relacion">Relación con la tablet víctima *</label>
+                    <select id="relacion">
+                        <option value="">— Seleccione —</option>
+                        <option>Propietario/a (y verdugo)</option>
+                        <option>Testigo presencial del maltrato</option>
+                        <option>La propia tablet (mediante representante legal)</option>
+                        <option>Familiar directo de la tablet</option>
+                        <option>Técnico de reparación indignado</option>
+                        <option>Ciudadano preocupado en general</option>
+                    </select>
+                </div>
+
+                <hr style="border:none; border-top:1px dashed var(--cream-dark); margin: 2rem 0;">
+
+                <div class="section-header" style="text-align:left; margin-bottom:2rem;">
+                    <span class="section-eyebrow">Sección II</span>
+                    <h2 style="font-size:1.3rem;">Datos de la víctima</h2>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="modelo">Modelo de la tablet *</label>
+                        <input type="text" id="modelo" placeholder="Ej: iPad, Samsung Galaxy Tab…">
+                    </div>
+                    <div class="form-group">
+                        <label for="estado">Estado actual de la pantalla *</label>
+                        <select id="estado">
+                            <option value="">— Seleccione —</option>
+                            <option>Intacta (el agresor fue contenido a tiempo)</option>
+                            <option>Rayada (infracción leve)</option>
+                            <option>Fisurada (infracción grave)</option>
+                            <option>Destrozada (infracción muy grave)</option>
+                            <option>Desaparecida (caso extremo)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr style="border:none; border-top:1px dashed var(--cream-dark); margin: 2rem 0;">
+
+                <div class="section-header" style="text-align:left; margin-bottom:2rem;">
+                    <span class="section-eyebrow">Sección III</span>
+                    <h2 style="font-size:1.3rem;">Descripción del incidente</h2>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo-maltrato">Tipo de maltrato infligido *</label>
+                    <select id="tipo-maltrato">
+                        <option value="">— Seleccione la infracción —</option>
+                        <option>Golpe contra superficie rígida (art. 47 bis)</option>
+                        <option>Lanzamiento al suelo (art. 48)</option>
+                        <option>Insultos verbales a la pantalla (art. 31)</option>
+                        <option>Contacto con líquido (art. 52)</option>
+                        <option>Aplastamiento bajo objetos pesados (art. 55)</option>
+                        <option>Abandono prolongado sin carga (art. 60 — negligencia)</option>
+                        <option>Uso como posavasos (art. 63)</option>
+                        <option>Otro (especificar en descripción)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Gravedad estimada *</label>
+                    <div class="severity-grid" id="severity-grid">
+                        <label class="severity-option" onclick="selectSeverity(this)">
+                            <input type="radio" name="gravedad" id="gravedad" value="leve">
+                            <span class="sev-emoji">😐</span>
+                            <span class="sev-label">Leve</span>
+                            <span class="sev-desc">Se recuperará con cariño</span>
+                        </label>
+                        <label class="severity-option" onclick="selectSeverity(this)">
+                            <input type="radio" name="gravedad" value="grave">
+                            <span class="sev-emoji">😟</span>
+                            <span class="sev-label">Grave</span>
+                            <span class="sev-desc">Requiere técnico y terapia</span>
+                        </label>
+                        <label class="severity-option" onclick="selectSeverity(this)">
+                            <input type="radio" name="gravedad" value="muy_grave">
+                            <span class="sev-emoji">😱</span>
+                            <span class="sev-label">Muy Grave</span>
+                            <span class="sev-desc">Pantalla en el más allá</span>
+                        </label>
+                        <label class="severity-option" onclick="selectSeverity(this)">
+                            <input type="radio" name="gravedad" value="extremo">
+                            <span class="sev-emoji">💀</span>
+                            <span class="sev-label">Extremo</span>
+                            <span class="sev-desc">Solo queda el cable USB</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:1.5rem;">
+                    <label for="descripcion">Descripción detallada de los hechos *</label>
+                    <textarea id="descripcion" placeholder="Describa con la mayor precisión posible el incidente: hora, circunstancias, si hubo provocación (recuerde que no sirve como atenuante), palabras pronunciadas por el agresor, etc."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="testigos">Testigos del incidente (opcional)</label>
+                    <input type="text" id="testigos" placeholder="Nombres de personas u otros dispositivos presentes">
+                    <p class="form-note">Los dispositivos Alexa o Google Home son testigos válidos si grabaron el incidente.</p>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-red">Presentar denuncia oficial</button>
+                    <p class="form-note" style="margin-top:0.75rem;">Al enviar este formulario, confirma que los hechos descritos son ciertos y acepta el R.I.P.D.T. en su totalidad, incluyendo el anexo de 340 páginas que nadie ha leído.</p>
+                </div>
+
+            </form>
+
+            <div id="confirmacion" class="confirmacion-box">
+                <div class="big-check">📋</div>
+                <h2>Denuncia registrada</h2>
+                <p>Su denuncia ha sido recibida por el Sindicato de Maltratación de Tablets y ha sido asignada a un inspector de campo.</p>
+                <span class="exp-ref" id="exp-numero"></span>
+                <p>Conserve este número de expediente. Recibirá una notificación en los próximos <strong>3 a 47 días hábiles</strong>, dependiendo de la carga de trabajo del tribunal y del humor del magistrado de guardia.</p>
+                <div class="stamp">Recibido por S.M.T.</div>
+                <br><br>
+                <a href="tribunal.html" class="btn btn-gold">Ver expedientes activos</a>
+            </div>
+        </div>
+
+        <aside class="info-sidebar fade-in">
+            <h3>¿Qué ocurre tras la denuncia?</h3>
+            <p>Un inspector de campo revisará su caso en un plazo no superior a 47 días hábiles. Si la infracción es grave, se iniciará un procedimiento sancionador.</p>
+
+            <h3>Infracciones más comunes</h3>
+            <ul>
+                <li>Golpe contra mesa (art. 47 bis)</li>
+                <li>Lanzamiento al sofá con exceso de fuerza</li>
+                <li>Insultos durante la carga lenta</li>
+                <li>Uso como paleta de cocina</li>
+                <li>Abandono sin carcasa en invierno</li>
+            </ul>
+
+            <h3>Caso destacado</h3>
+            <p style="color: var(--gold-pale); font-style: italic;">«Emma Sofía F.C. — Exp. SMT/2025/TRI-04471 — Vista el 4 de abril. Infracción: golpe contra mesa al sonar alarma.»</p>
+
+            <h3>Contacto urgente</h3>
+            <p>Si la tablet está en peligro inmediato, llame al <strong style="color:var(--gold-light);">900 000 SMT</strong> (línea de atención 24h, excepto fines de semana y festivos nacionales y autonómicos).</p>
+        </aside>
+
+    </div>
+
+</main>
+
+<footer>
+    <p>© 2025 Sindicato de Maltratación de Tablets — S.M.T. · <a href="https://smt.vercel.app">smt.vercel.app</a></p>
+    <p>Sede: Calle del Pixel Roto, Nº 7, Planta 3ª · 28001 Madrid · tribunal@sindicato-tablets.org</p>
+    <p>Este organismo es completamente ficticio. Las tablets, sin embargo, son reales y recuerdan.</p>
+</footer>
+
+<script>
+function selectSeverity(el) {
+    document.querySelectorAll('.severity-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+}
+</script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tribunal Superior — S.M.T.</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tribunal-header {
+            text-align: center;
+            padding: 2.5rem 0 2rem;
+            border-bottom: 1px solid var(--cream-dark);
+            margin-bottom: 3rem;
+        }
+        .magistrados-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .magistrado-card {
+            background: #fff;
+            border: 1px solid var(--cream-dark);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        .magistrado-avatar {
+            font-size: 2.8rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        .magistrado-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: var(--navy);
+            margin-bottom: 0.2rem;
+        }
+        .magistrado-card .cargo {
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.62rem;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .magistrado-card .bio {
+            font-size: 0.82rem;
+            color: var(--text-mid);
+            font-style: italic;
+            margin-top: 0.5rem;
+            line-height: 1.5;
+        }
+        .filter-bar {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .filter-btn {
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--cream-dark);
+            background: #fff;
+            color: var(--text-mid);
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--navy);
+            color: var(--gold-light);
+            border-color: var(--navy);
+        }
+        .case-card {
+            background: #fff;
+            border: 1px solid var(--cream-dark);
+            border-left: 4px solid var(--navy-light);
+            padding: 1.5rem 1.8rem;
+            margin-bottom: 1rem;
+            transition: box-shadow 0.2s;
+        }
+        .case-card:hover { box-shadow: 0 4px 16px var(--shadow); }
+        .case-card.destacado { border-left-color: var(--red); }
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.6rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .case-ref {
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.68rem;
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+        }
+        .case-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            color: var(--navy);
+            margin: 0.3rem 0 0.5rem;
+        }
+        .case-meta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.65rem;
+            color: var(--text-mid);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--cream-dark);
+            border: 1px solid var(--cream-dark);
+            margin-bottom: 3rem;
+        }
+        .stat-cell {
+            background: #fff;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .stat-cell .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--navy);
+            display: block;
+        }
+        .stat-cell .lbl {
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.62rem;
+            color: var(--text-mid);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        @media (max-width: 640px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a class="nav-logo" href="index.html">S.M.T.</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="denuncia.html">Denunciar</a></li>
+            <li><a href="tribunal.html">Tribunal</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="hero" style="padding: 3rem 2rem;">
+    <div class="hero-content">
+        <p class="hero-eyebrow">Tribunal Superior de Dispositivos Maltratados</p>
+        <h1><em>Sala de Expedientes</em></h1>
+        <p class="hero-subtitle">Registro público de casos activos, sobreseídos y en instrucción</p>
+    </div>
+</section>
+
+<main>
+
+    <div class="stats-row fade-in">
+        <div class="stat-cell">
+            <span class="num" data-target="4471">0</span>
+            <span class="lbl">Expedientes totales</span>
+        </div>
+        <div class="stat-cell">
+            <span class="num" data-target="312">0</span>
+            <span class="lbl">En juicio oral</span>
+        </div>
+        <div class="stat-cell">
+            <span class="num" data-target="88">0</span>
+            <span class="lbl">Sentencias este mes</span>
+        </div>
+        <div class="stat-cell">
+            <span class="num" data-target="0">0</span>
+            <span class="lbl">Agresores absueltos</span>
+        </div>
+    </div>
+
+    <div class="section-header fade-in">
+        <span class="section-eyebrow">Registro público</span>
+        <h2>Expedientes Activos Destacados</h2>
+        <div class="section-rule"><span></span></div>
+    </div>
+
+    <div class="filter-bar fade-in">
+        <button class="filter-btn active">Todos</button>
+        <button class="filter-btn">Muy Grave</button>
+        <button class="filter-btn">Grave</button>
+        <button class="filter-btn">En instrucción</button>
+        <button class="filter-btn">Vista señalada</button>
+    </div>
+
+    <div class="fade-in">
+
+        <div class="case-card destacado">
+            <div class="case-header">
+                <span class="case-ref">SMT/2025/TRI-04471</span>
+                <div>
+                    <span class="badge badge-red">Muy Grave</span>
+                    &nbsp;<span class="badge badge-navy">Vista señalada</span>
+                </div>
+            </div>
+            <h3>Caso Emma Sofía F.C. — «Golpe contra mesa al sonar»</h3>
+            <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.7;">
+                La acusada habría golpeado voluntaria y reiteradamente una tablet contra la superficie de una mesa al escuchar el sonido de alarma del dispositivo. La víctima interpuso denuncia mediante vibración codificada S.O.S. La infracción queda tipificada como <em>Violencia Percusiva Intencional contra Superficie Rígida</em> (art. 47 bis), agravada por ensañamiento y reincidencia presunta.
+            </p>
+            <div class="case-meta">
+                <span>📅 Vista: 4 de abril de 2025 · 10:30h</span>
+                <span>🏛 Sala 3 — Planta baja</span>
+                <span>⚖ Magistrada: Dña. Rosa Villarreal</span>
+                <span>📋 Acusada citada formalmente</span>
+            </div>
+        </div>
+
+        <div class="case-card">
+            <div class="case-header">
+                <span class="case-ref">SMT/2025/TRI-04389</span>
+                <div>
+                    <span class="badge badge-gold">Grave</span>
+                    &nbsp;<span class="badge badge-navy">En instrucción</span>
+                </div>
+            </div>
+            <h3>Caso Anónimo — «Lanzamiento al sofá con velocidad excesiva»</h3>
+            <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.7;">
+                Un ciudadano anónimo habría lanzado su tablet Samsung Galaxy Tab S7 contra el sofá familiar con una velocidad estimada de 14 km/h al frustrarse durante una partida en línea. El dispositivo quedó con la carcasa desencajada. El inspector de campo concluyó que «la intención era clara aunque la puntería, afortunadamente, no».
+            </p>
+            <div class="case-meta">
+                <span>📅 En instrucción</span>
+                <span>🏛 Sala 7</span>
+                <span>⚖ Inspector: D. Fernando Téllez</span>
+            </div>
+        </div>
+
+        <div class="case-card">
+            <div class="case-header">
+                <span class="case-ref">SMT/2025/TRI-04201</span>
+                <div>
+                    <span class="badge badge-gold">Grave</span>
+                    &nbsp;<span class="badge badge-green">Sentencia firme</span>
+                </div>
+            </div>
+            <h3>Caso Rodrigo P.M. — «Uso como posavasos durante seis meses»</h3>
+            <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.7;">
+                El acusado utilizó su iPad de primera generación como posavasos de manera sistemática desde noviembre de 2024. La cámara trasera quedó obstruida por un anillo de humedad permanente. Sentencia condenatoria: inhabilitación para compra de Apple durante dos años e inscripción en el R.N.M.E.
+            </p>
+            <div class="case-meta">
+                <span>📅 Sentencia: 14 de febrero de 2025</span>
+                <span>🏛 Sala 1</span>
+                <span>⚖ Magistrado: D. Luis Castaño</span>
+            </div>
+        </div>
+
+        <div class="case-card">
+            <div class="case-header">
+                <span class="case-ref">SMT/2024/TRI-03917</span>
+                <div>
+                    <span class="badge badge-red">Muy Grave</span>
+                    &nbsp;<span class="badge badge-green">Sentencia firme</span>
+                </div>
+            </div>
+            <h3>Caso Martínez-Fuentes — «Contacto deliberado con café con leche»</h3>
+            <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.7;">
+                La acusada derramó café con leche sobre una tablet Huawei MediaPad mientras «intentaba alcanzar el mando a distancia», según declaró. El peritaje técnico determinó que la trayectoria del vaso era inconsistente con un accidente. Condena: prohibición de consumir bebidas calientes a menos de 50 cm de cualquier dispositivo electrónico, durante tres años.
+            </p>
+            <div class="case-meta">
+                <span>📅 Sentencia: 3 de octubre de 2024</span>
+                <span>🏛 Sala 2</span>
+                <span>⚖ Magistrada: Dña. Rosa Villarreal</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top:2rem;" class="fade-in">
+        <p style="font-size:0.85rem; color:var(--text-mid); font-style:italic;">Se muestran los 4 casos más relevantes del registro. El acceso completo a los 4.471 expedientes requiere credenciales de inspector o cargo de magistrado.</p>
+    </div>
+
+    <hr style="border:none; border-top:1px solid var(--cream-dark); margin: 4rem 0;">
+
+    <div class="section-header fade-in">
+        <span class="section-eyebrow">Cuerpo judicial</span>
+        <h2>El Tribunal</h2>
+        <div class="section-rule"><span></span></div>
+    </div>
+
+    <div class="magistrados-grid fade-in">
+        <div class="magistrado-card">
+            <span class="magistrado-avatar">⚖️</span>
+            <h4>Dña. Rosa Villarreal</h4>
+            <p class="cargo">Magistrada Presidenta</p>
+            <p class="bio">Lleva 12 años en el tribunal. Es conocida por su frase: «Un golpe es un golpe, aunque lo dé con el codo sin querer».</p>
+        </div>
+        <div class="magistrado-card">
+            <span class="magistrado-avatar">📜</span>
+            <h4>D. Luis Castaño</h4>
+            <p class="cargo">Magistrado — Sala 1</p>
+            <p class="bio">Especialista en casos de negligencia por abandono. Nunca ha tenido un teléfono con la pantalla rota. Lo menciona en todas las vistas.</p>
+        </div>
+        <div class="magistrado-card">
+            <span class="magistrado-avatar">🔍</span>
+            <h4>D. Fernando Téllez</h4>
+            <p class="cargo">Inspector Jefe de Campo</p>
+            <p class="bio">Antiguo técnico de reparación. Puede datar un arañazo con una precisión de ±3 días. Tiene el récord de 17 inspecciones en un solo turno.</p>
+        </div>
+        <div class="magistrado-card">
+            <span class="magistrado-avatar">🖊️</span>
+            <h4>D. Carlos Mendoza Herrera</h4>
+            <p class="cargo">Secretario General</p>
+            <p class="bio">Redacta las citaciones con una solemnidad que, según sus colegas, «debería reservarse para tratados internacionales».</p>
+        </div>
+    </div>
+
+    <section class="cta-section fade-in">
+        <h2>¿Ha sido usted citado por el S.M.T.?</h2>
+        <p>La comparecencia es obligatoria. La ignorancia del Reglamento no exime de su cumplimiento.</p>
+        <a href="denuncia.html" class="btn btn-gold">Presentar denuncia</a>
+        &nbsp;&nbsp;
+        <a href="index.html" class="btn btn-outline">Volver al inicio</a>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2025 Sindicato de Maltratación de Tablets — S.M.T. · <a href="https://smt.vercel.app">smt.vercel.app</a></p>
+    <p>Sede: Calle del Pixel Roto, Nº 7, Planta 3ª · 28001 Madrid · tribunal@sindicato-tablets.org</p>
+    <p>Este organismo es completamente ficticio. Las tablets, sin embargo, son reales y recuerdan.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
